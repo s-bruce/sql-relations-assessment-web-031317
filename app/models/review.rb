@@ -4,6 +4,7 @@ class Review
 
   ATTRIBUTES = {
     id: "INTEGER PRIMARY KEY",
+    content: "TEXT",
     customer_id: "INTEGER",
     restaurant_id: "INTEGER"
   }
@@ -14,9 +15,21 @@ class Review
   
 
   def customer
+    sql = <<-SQL
+      SELECT * FROM customers
+      WHERE id = ?
+    SQL
+
+    DB[:conn].execute(sql, self.customer_id)
   end
 
   def restaurant
+    sql = <<-SQL
+      SELECT * FROM restaurants
+      WHERE id = ?
+    SQL
+
+    DB[:conn].execute(sql, self.restaurant_id)
   end
 
 end
